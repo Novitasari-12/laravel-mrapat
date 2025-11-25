@@ -1,0 +1,10 @@
+FROM webdevops/php-nginx:8.2
+WORKDIR /app
+
+COPY . /app
+RUN composer install --no-dev --optimize-autoloader
+
+RUN php artisan key:generate --force
+RUN php artisan storage:link || true
+
+ENV WEB_DOCUMENT_ROOT=/app/public
